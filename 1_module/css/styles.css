@@ -43,3 +43,14 @@ html {
   border-bottom: 1px solid #ddd;
   padding: 10px;
 }
+.carousel {
+  background-color: #512da8;
+}
+.carousel-item {
+  height: 300px;
+}
+
+.carousel-item img {
+  position: absolute;
+  min-height: 300px;
+}
