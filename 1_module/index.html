@@ -8,7 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
     <link href="css/styles.css" rel="stylesheet">
@@ -33,16 +33,16 @@
                     <li class="nav-item"><a class="nav-link" href="contactus.html"><span
                                 class="fa fa-phone fa-sm"></span>Contact</a></li>
                 </ul>
-                <span class="navbar-text float-right">
-                    <a dclass="float-right" data-toggle="modal" data-target="#loginModal">
+                <button class="btn navbar-text float-right">
+                    <a dclass="float-right" id='loginBtn'>
                         <span class="fa fa-sign-in"></span>Login
                     </a>
-                </span>
+                </button>
 
             </div>
         </div>
     </nav>
-    <div class="modal fade" role="dialog" id="reserveForm">
+    <div class="modal fade" role="dialog" id="reserveFormModal">
         <div class="modal-dialog modal-lg" role="content">
             <div class="modal-content">
                 <div class="modal-header">
@@ -175,7 +175,7 @@
                 </div>
                 <div class="col-12 col-sm align-self-center">
                     <a class="btn bg-warning btn-block btn-sm text-white"
-                    data-toggle="modal" data-target="#reserveForm" type="button">Reserve Table</a>
+                    id="reserveForm" type="button">Reserve Table</a>
                 </div>
             </div>
         </div>
@@ -370,7 +370,13 @@
                 $('#carouselBtn').children('span').addClass('fa-pause')
             }
             })
+            $('#reserveForm').click(function(){
+                $('#reserveFormModal').modal({show:true})
+            })
 
+            $('#loginBtn').click(function(){
+                $('#loginModal').modal({show:true})
+            })
 
         })
 
