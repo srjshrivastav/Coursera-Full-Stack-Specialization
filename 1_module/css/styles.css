@@ -59,6 +59,7 @@ html {
 
 #carouselBtn {
   right: 0px;
-  position: absolute;
+  /* position: relative; */
+  float: right;
   bottom: 0px;
 }
