@@ -32,7 +32,7 @@ class Menu extends React.Component {
     });
 
     return (
-      <div className="container mt-4">
+      <div className="container">
         <div className="row">{menu}</div>
         {this.state.selectedDish ? (
           <DishDetail dish={this.state.selectedDish} />
