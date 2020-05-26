@@ -16,23 +16,8 @@ class Menu extends React.Component {
     }
   };
 
-  renderDish(dish) {
-    if (dish) {
-      return (
-        <Card>
-          <CardImg width="100%" src={dish.image} alt={dish.name} />
-          <CardImgOverlay>
-            <CardTitle heading="true">{dish.name}</CardTitle>
-          </CardImgOverlay>
-          <CardBody>{dish.description}</CardBody>
-        </Card>
-      );
-    } else {
-      return <div></div>;
-    }
-  }
-
   render() {
+    const { selectedDish } = this.state;
     const menu = this.props.dishes.map((dish) => {
       return (
         <div key={dish.id} className="col-12 col-md-5 m-1 mt-5">
@@ -41,6 +26,15 @@ class Menu extends React.Component {
             <CardImgOverlay>
               <CardTitle heading="true">{dish.name}</CardTitle>
             </CardImgOverlay>
+            {selectedDish ? (
+              selectedDish.name === dish.name ? (
+                <CardBody>{dish.description}</CardBody>
+              ) : (
+                <div></div>
+              )
+            ) : (
+              <div></div>
+            )}
           </Card>
         </div>
       );
@@ -49,7 +43,6 @@ class Menu extends React.Component {
     return (
       <div className="container mt-4">
         <div className="row">{menu}</div>
-        <div className="row">{this.renderDish(this.state.selectedDish)}</div>
       </div>
     );
   }
