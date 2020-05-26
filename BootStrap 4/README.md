@@ -24,8 +24,8 @@ Contains following Bootstrap components :-
 Now run the following commands
 
 ```
-$ git clone https://github.com/srjshrivastav/Bootstrap
-$ cd Bootstrap
+$ git clone https://github.com/srjshrivastav/Coursera-Full-Stack-Specialization
+$ cd "BootStrap 4"
 $ npm install
 $ npm start
 ```
