@@ -43,7 +43,10 @@ class Main extends React.Component {
                 />
               )}
             />
-            <Route path="/aboutus" component={About} />
+            <Route
+              path="/aboutus"
+              component={() => <About leaders={LEADERS} />}
+            />
             <Redirect to="/home" />
           </Switch>
         </div>
