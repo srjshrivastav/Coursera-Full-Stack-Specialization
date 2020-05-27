@@ -3,17 +3,17 @@ import { CardImg, Card, CardBody, CardTitle, CardText } from "reactstrap";
 
 export default function DishDetail(props) {
   const { dish } = props;
-  const { comments } = dish;
+  const { comments, image, name, description } = dish[0];
   return (
     <div className="row">
       <div className="col-12 col-sm-5 m-1">
         <Card>
-          <CardImg width="100%" src={dish.image} alt={dish.name} />
+          <CardImg width="100%" src={image} alt={name} />
           <CardBody>
             <CardTitle>
-              <h4>{dish.name}</h4>
+              <h4>{name}</h4>
             </CardTitle>
-            <CardText>{dish.description}</CardText>
+            <CardText>{description}</CardText>
           </CardBody>
         </Card>
       </div>
@@ -24,7 +24,12 @@ export default function DishDetail(props) {
             <div>
               <p style={{ fontSize: 18 }}>{comment.comment}</p>
               <p style={{ fontSize: 18 }}>
-                --{comment.author}, {new Date(comment.date).toDateString()}
+                --{comment.author},{" "}
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "2-digit",
+                }).format(new Date(Date.parse(comment.date)))}
               </p>
             </div>
           </div>
