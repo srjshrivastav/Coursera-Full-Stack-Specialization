@@ -62,7 +62,6 @@ function Footer(props) {
               </a>
               <a
                 className="btn btn-social-icon btn-twitter"
-                href
                 href="http://twitter.com/"
               >
                 <i className="fa fa-twitter"></i>
