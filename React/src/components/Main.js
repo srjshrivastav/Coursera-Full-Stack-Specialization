@@ -5,6 +5,8 @@ import Menu from "./menu";
 import { DISHES } from "../shared/dishes";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Home from "./Home";
+import About from "./Aboutcomponent";
+import { LEADERS } from "../shared/leaders";
 
 class Main extends React.Component {
   constructor(props) {
@@ -41,6 +43,7 @@ class Main extends React.Component {
                 />
               )}
             />
+            <Route path="/aboutus" component={About} />
             <Redirect to="/home" />
           </Switch>
         </div>
