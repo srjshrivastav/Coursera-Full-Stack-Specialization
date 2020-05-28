@@ -98,46 +98,46 @@ class Contact extends Component {
           <div className="col-12 col-md-9">
             <Form onSubmit={this.handleSubmit}>
               <FormGroup row>
-                <Label htmlFor="firstname" md={2}>
+                <Label htmlFor="firstName" md={2}>
                   First Name
                 </Label>
                 <Col md={10}>
                   <Input
                     type="text"
-                    id="firstname"
-                    name="firstname"
+                    id="firstName"
+                    name="firstName"
                     placeholder="First Name"
-                    value={this.state.firstname}
+                    value={this.state.firstName}
                     onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label htmlFor="lastname" md={2}>
+                <Label htmlFor="lastName" md={2}>
                   Last Name
                 </Label>
                 <Col md={10}>
                   <Input
                     type="text"
-                    id="lastname"
-                    name="lastname"
+                    id="lastName"
+                    name="lastName"
                     placeholder="Last Name"
-                    value={this.state.lastname}
+                    value={this.state.lastName}
                     onChange={this.handleInputChange}
                   />
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label htmlFor="telnum" md={2}>
+                <Label htmlFor="telNum" md={2}>
                   Contact Tel.
                 </Label>
                 <Col md={10}>
                   <Input
                     type="tel"
-                    id="telnum"
-                    name="telnum"
+                    id="telNum"
+                    name="telNum"
                     placeholder="Tel. number"
-                    value={this.state.telnum}
+                    value={this.state.telNum}
                     onChange={this.handleInputChange}
                   />
                 </Col>
