@@ -2,43 +2,23 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Menu from "./menu";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Home from "./Home";
 import About from "./Aboutcomponent";
 import { LEADERS } from "../shared/leaders";
-import { PROMOTIONS } from "../shared/promotions";
-import { COMMENTS } from "../shared/comments";
-import { DISHES } from "../shared/dishes";
 import Contact from "./Contact";
 import DishDetail from "./DishDetailComponent";
+import { connect } from "react-redux";
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
-      promotions: PROMOTIONS,
-      leaders: LEADERS,
-    };
-  }
-
-  handleClick = (dishId) => {
-    if (this.state.selectedDish !== dishId) {
-      this.setState({ selectedDish: dishId });
-    } else {
-      this.setState({ selectedDish: null });
-    }
-  };
-
   render() {
+    const { dishes, comments, promotions, leaders } = this.props;
     const HomePage = () => {
       return (
         <Home
-          dish={this.state.dishes.filter((dish) => dish.featured)[0]}
-          promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
-          leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+          dish={dishes.filter((dish) => dish.featured)[0]}
+          promotion={promotions.filter((promo) => promo.featured)[0]}
+          leader={leaders.filter((leader) => leader.featured)[0]}
         />
       );
     };
@@ -46,11 +26,11 @@ class Main extends React.Component {
       return (
         <DishDetail
           dish={
-            this.state.dishes.filter(
+            dishes.filter(
               (dish) => dish.id === parseInt(match.params.dishId, 10)
             )[0]
           }
-          comments={this.state.comments.filter(
+          comments={comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
         />
@@ -65,13 +45,7 @@ class Main extends React.Component {
             <Route
               exact
               path="/menu"
-              component={() => (
-                <Menu
-                  dishes={this.state.dishes}
-                  onClick={this.handleClick}
-                  selectedDish={this.state.selectedDish}
-                />
-              )}
+              component={() => <Menu dishes={dishes} />}
             />
             <Route
               path="/aboutus"
@@ -88,4 +62,13 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Main));
