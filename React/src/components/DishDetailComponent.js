@@ -15,14 +15,12 @@ export default function DishDetail(props) {
   return (
     <div>
       <div className="row">
-        <div className="col-12">
-          <Breadcrumb>
-            <BreadcrumbItem>
-              <Link to="/menu">Menu</Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
-          </Breadcrumb>
-        </div>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/menu">Menu</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+        </Breadcrumb>
       </div>
       <div className="row">
         <div className="col-12 col-sm-5 m-1">
