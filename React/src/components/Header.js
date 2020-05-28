@@ -57,7 +57,7 @@ class Header extends Component {
         >
           <ModalHeader toggle={() => this.toggleModal()}>Login</ModalHeader>
           <ModalBody>
-            <Form onSubmit={() => this.handleLogin()}>
+            <Form onSubmit={(event) => this.handleLogin(event)}>
               <FormGroup>
                 <Label htmlFor="username">Username</Label>
                 <Input
