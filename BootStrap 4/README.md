@@ -25,7 +25,7 @@ Now run the following commands
 
 ```
 $ git clone https://github.com/srjshrivastav/Coursera-Full-Stack-Specialization
-$ cd "BootStrap 4"
+$ cd "cd Full\ Stack\ Specialization/BootStrap 4"
 $ npm install
 $ npm start
 ```
