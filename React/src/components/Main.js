@@ -27,11 +27,11 @@ class Main extends React.Component {
       return (
         <DishDetail
           dish={
-            this.props.dishes.filter(
+            dishes.filter(
               (dish) => dish.id === parseInt(match.params.dishId, 10)
             )[0]
           }
-          comments={this.props.comments.filter(
+          comments={comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           addComment={this.props.addComment}

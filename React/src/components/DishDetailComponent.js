@@ -26,6 +26,16 @@ export default class DishDetail extends React.Component {
   handleToggle = () => {
     this.setState((state) => ({ showCommentModal: !state.showCommentModal }));
   };
+
+  handleSubmit(values) {
+    this.props.addComment(
+      this.props.dish.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
+  }
+
   render() {
     const { dish, comments } = this.props;
     const required = (val) => val && val.length;
@@ -42,14 +52,15 @@ export default class DishDetail extends React.Component {
             Submit Comment
           </ModalHeader>
           <ModalBody>
-            <LocalForm>
+            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
               <Row className="form-group">
                 <Col md={12}>
                   <Label>Rating</Label>
                   <Control.select
                     type="select"
-                    model="rating"
+                    model=".rating"
                     className="form-control"
+                    defaultValue="1"
                   >
                     <option>1</option>
                     <option>2</option>
@@ -65,7 +76,7 @@ export default class DishDetail extends React.Component {
                   <Control.text
                     type="text"
                     placeholder="Your Name"
-                    model="name"
+                    model=".author"
                     className="form-control"
                     validators={{
                       required,
@@ -75,7 +86,7 @@ export default class DishDetail extends React.Component {
                   ></Control.text>
                   <Errors
                     className="text-danger"
-                    model="name"
+                    model=".author"
                     show="touched"
                     messages={{
                       required: "Required ",
@@ -88,7 +99,11 @@ export default class DishDetail extends React.Component {
               <Row className="form-group">
                 <Col md={12}>
                   <Label>Comment</Label>
-                  <Input type="textarea" model="comment" rows="5"></Input>
+                  <Control.textarea
+                    model=".comment"
+                    rows="5"
+                    className="form-control"
+                  ></Control.textarea>
                 </Col>
               </Row>
               <Row className="form-group">
