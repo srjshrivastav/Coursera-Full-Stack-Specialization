@@ -29,7 +29,7 @@ export default class DishDetail extends React.Component {
 
   handleSubmit(values) {
     this.props.addComment(
-      this.props.dish.dishId,
+      this.props.dish.id,
       values.rating,
       values.author,
       values.comment
