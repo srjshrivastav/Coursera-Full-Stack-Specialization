@@ -55,7 +55,12 @@ class Main extends React.Component {
             <Route
               exact
               path="/menu"
-              component={() => <Menu dishes={this.props.dishes.dishes} />}
+              component={() => (
+                <Menu
+                  dishes={this.props.dishes.dishes}
+                  isLoading={this.props.dishes.isLoading}
+                />
+              )}
             />
             <Route
               path="/aboutus"
