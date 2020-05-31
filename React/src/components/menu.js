@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
 
 function Menu(props) {
-  const { dishes, isLoading } = props;
+  const { dishes, isLoading, errMess } = props;
 
   const menu = dishes.map((dish) => {
     return (
@@ -27,7 +27,6 @@ function Menu(props) {
       </div>
     );
   });
-  console.log("Idhar", props);
   if (isLoading) {
     return (
       <div className="container">

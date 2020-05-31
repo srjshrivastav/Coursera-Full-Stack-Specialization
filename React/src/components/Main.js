@@ -59,6 +59,7 @@ class Main extends React.Component {
                 <Menu
                   dishes={this.props.dishes.dishes}
                   isLoading={this.props.dishes.isLoading}
+                  errMess={this.props.dishes.errMess}
                 />
               )}
             />
