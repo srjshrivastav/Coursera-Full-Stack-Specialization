@@ -35,6 +35,12 @@ export default class DishDetail extends React.Component {
       values.author,
       values.comment
     );
+    this.props.postComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   render() {
