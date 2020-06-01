@@ -5,7 +5,6 @@ import Menu from "./menu";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import Home from "./Home";
 import About from "./Aboutcomponent";
-import { LEADERS } from "../shared/leaders";
 import Contact from "./Contact";
 import DishDetail from "./DishDetailComponent";
 import { connect } from "react-redux";
@@ -15,18 +14,19 @@ import {
   fetchComments,
   fetchPromos,
   addComment,
+  fetchleaders,
 } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 
 class Main extends React.Component {
   componentDidMount() {
+    this.props.fetchleaders();
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
   }
 
   render() {
-    console.log(this.props);
     const HomePage = () => {
       return (
         <Home
@@ -40,7 +40,9 @@ class Main extends React.Component {
           }
           promoLoading={this.props.promotions.isLoading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+          leader={
+            this.props.leaders.leaders.filter((leader) => leader.featured)[0]
+          }
         />
       );
     };
@@ -82,7 +84,7 @@ class Main extends React.Component {
             />
             <Route
               path="/aboutus"
-              component={() => <About leaders={LEADERS} />}
+              component={() => <About leaders={this.props.leaders.leaders} />}
             />
 
             <Route
@@ -123,6 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
+  fetchleaders: () => dispatch(fetchleaders()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
