@@ -16,6 +16,7 @@ import {
   Row,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./Loading";
 import { Errors, Control, LocalForm } from "react-redux-form";
 
@@ -144,7 +145,7 @@ export default class DishDetail extends React.Component {
           <div className="row">
             <div className="col-12 col-sm-5 m-1">
               <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                   <CardTitle>
                     <h4>{dish.name}</h4>

@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
+import { baseUrl } from "../shared/baseUrl";
 
 function Menu(props) {
   const { dishes, isLoading, errMess } = props;
@@ -18,7 +19,7 @@ function Menu(props) {
       <div key={dish.id} className="col-12 col-md-5 m-1">
         <Link to={`/menu/${dish.id}`}>
           <Card>
-            <CardImg width="100%" src={dish.image} alt={dish.name} />
+            <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
             <CardImgOverlay>
               <CardTitle heading="true">{dish.name}</CardTitle>
             </CardImgOverlay>
