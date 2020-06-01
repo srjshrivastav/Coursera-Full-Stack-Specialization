@@ -37,7 +37,7 @@ export default class DishDetail extends React.Component {
       values.comment
     );
     this.props.postComment(
-      this.props.dishId,
+      this.props.dish.id,
       values.rating,
       values.author,
       values.comment
@@ -46,7 +46,6 @@ export default class DishDetail extends React.Component {
 
   render() {
     const { dish, comments } = this.props;
-    console.log(this.props);
     const required = (val) => val && val.length;
     const maxLength = (len) => (val) => !val || val.length <= len;
     const minLength = (len) => (val) => val && val.length >= len;
@@ -172,7 +171,7 @@ export default class DishDetail extends React.Component {
               <h3>Comments</h3>
               <Stagger in>
                 {comments.map((comment) => (
-                  <Fade in>
+                  <Fade in key={comment.id}>
                     <div key={comment.id}>
                       <div>
                         <p style={{ fontSize: 18 }}>{comment.comment}</p>

@@ -17,7 +17,6 @@ function RenderCard({ item, isLoading, errMess }) {
   } else if (errMess) {
     return <h4>{errMess}</h4>;
   }
-  console.log(item.name, item);
   return (
     <FadeTransform
       in

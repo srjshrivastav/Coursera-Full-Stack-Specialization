@@ -215,6 +215,14 @@
       "comment": "checking",
       "date": "2020-06-01T11:44:54.720Z",
       "id": 21
+    },
+    {
+      "dishId": 0,
+      "rating": "3",
+      "author": "syrah",
+      "comment": "dfdf",
+      "date": "2020-06-01T18:09:50.851Z",
+      "id": 22
     }
   ],
   "promotions": [
