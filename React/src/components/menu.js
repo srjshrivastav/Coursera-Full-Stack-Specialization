@@ -12,7 +12,7 @@ import { Loading } from "./Loading";
 import { baseUrl } from "../shared/baseUrl";
 
 function Menu(props) {
-  const { dishes, isLoading, errMess } = props;
+  const { dishes, isLoading } = props;
 
   const menu = dishes.map((dish) => {
     return (
