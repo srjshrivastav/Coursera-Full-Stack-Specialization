@@ -6,14 +6,7 @@ class Contact extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      telNum: "",
-      email: "",
-      address: "",
-      message: "",
-      agree: false,
-      contactType: "tel",
+      disabled: true,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,10 +22,8 @@ class Contact extends Component {
   }
 
   handleSubmit(event) {
-    console.log("Current State is: " + JSON.stringify(this.state));
-    alert("Current State is: " + JSON.stringify(this.state));
+    this.props.submitFeedback(event);
     this.props.resetFeedbackForm();
-    event.preventDefault();
   }
 
   render() {
@@ -95,7 +86,7 @@ class Contact extends Component {
             <h3>Send us your Feedback</h3>
           </div>
           <div className="col-12 col-md-9">
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <LocalForm onSubmit={this.handleSubmit}>
               <Row className="form-group">
                 <Label htmlFor="firstname" md={2}>
                   First Name
@@ -210,6 +201,47 @@ class Contact extends Component {
                       validEmail: "Invalid Email Address",
                     }}
                   />
+                </Col>
+              </Row>
+              <Row className="form-group row">
+                <Col
+                  md={{
+                    size: "6",
+                    offset: "2",
+                  }}
+                >
+                  <div class="form-check">
+                    <Control.checkbox
+                      type="checkbox"
+                      class="form-check-input"
+                      model=".agree"
+                      name="agree"
+                      id="approve"
+                      onChange={() =>
+                        this.setState({ disabled: !this.state.disabled })
+                      }
+                    />
+                    <Label className="form-check-label" htmlfor="approve">
+                      <strong>May we contact you?</strong>
+                    </Label>
+                  </div>
+                </Col>
+                <Col
+                  md={{
+                    size: "3",
+                    offset: "1",
+                  }}
+                >
+                  <Control.select
+                    class="form-control"
+                    model=".contactType"
+                    name="contactType"
+                    disabled={this.state.disabled}
+                  >
+                    <option>Choose</option>
+                    <option>Tel.</option>
+                    <option>Email</option>
+                  </Control.select>
                 </Col>
               </Row>
               <Row className="form-group">

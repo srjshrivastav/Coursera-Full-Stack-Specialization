@@ -277,6 +277,26 @@
       "message": "afadsfds",
       "date": "2017-12-04T09:41:49.890Z",
       "id": 1
+    },
+    {
+      "agree": false,
+      "contactType": "Tel.",
+      "firstname": "suraj",
+      "lastname": "shri",
+      "telnum": "97451",
+      "email": "srjshrivastav1@gmail.com",
+      "message": "checkinh",
+      "id": 3
+    },
+    {
+      "firstname": "sgsdg",
+      "lastname": "sdfdsf",
+      "telnum": "654",
+      "email": "srjshrivastav@gmail.com",
+      "agree": true,
+      "contactType": "Email",
+      "message": "sbnjbas",
+      "id": 4
     }
   ]
 }

@@ -15,6 +15,7 @@ import {
   fetchPromos,
   addComment,
   fetchleaders,
+  submitFeedback,
 } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 
@@ -97,7 +98,10 @@ class Main extends React.Component {
               exact
               path="/contactus"
               component={() => (
-                <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                <Contact
+                  resetFeedbackForm={this.props.resetFeedbackForm}
+                  submitFeedback={this.props.submitFeedback}
+                />
               )}
             />
             <Route path="/menu/:dishId" component={DishWithId} />
@@ -128,6 +132,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
+  },
+  submitFeedback: (feedback) => {
+    submitFeedback(feedback);
   },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
