@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./Loading";
 import { Errors, Control, LocalForm } from "react-redux-form";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 export default class DishDetail extends React.Component {
   state = {
@@ -150,33 +151,44 @@ export default class DishDetail extends React.Component {
           </div>
           <div className="row">
             <div className="col-12 col-sm-5 m-1">
-              <Card>
-                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                <CardBody>
-                  <CardTitle>
-                    <h4>{dish.name}</h4>
-                  </CardTitle>
-                  <CardText>{dish.description}</CardText>
-                </CardBody>
-              </Card>
+              <FadeTransform
+                in
+                transformProps={{
+                  exitTransform: "scale(0.5) translateY(-50%)",
+                }}
+              >
+                <Card>
+                  <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                  <CardBody>
+                    <CardTitle>
+                      <h4>{dish.name}</h4>
+                    </CardTitle>
+                    <CardText>{dish.description}</CardText>
+                  </CardBody>
+                </Card>
+              </FadeTransform>
             </div>
             <div className="col-sm-5 m-1">
               <h3>Comments</h3>
-              {comments.map((comment) => (
-                <div key={comment.id}>
-                  <div>
-                    <p style={{ fontSize: 18 }}>{comment.comment}</p>
-                    <p style={{ fontSize: 18 }}>
-                      --{comment.author},{" "}
-                      {new Intl.DateTimeFormat("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "2-digit",
-                      }).format(new Date(Date.parse(comment.date)))}
-                    </p>
-                  </div>
-                </div>
-              ))}
+              <Stagger in>
+                {comments.map((comment) => (
+                  <Fade in>
+                    <div key={comment.id}>
+                      <div>
+                        <p style={{ fontSize: 18 }}>{comment.comment}</p>
+                        <p style={{ fontSize: 18 }}>
+                          --{comment.author},{" "}
+                          {new Intl.DateTimeFormat("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "2-digit",
+                          }).format(new Date(Date.parse(comment.date)))}
+                        </p>
+                      </div>
+                    </div>
+                  </Fade>
+                ))}
+              </Stagger>
               <Button outline onClick={() => this.handleToggle()}>
                 <span className="fa fa-pencil"></span> Submit Comment
               </Button>
