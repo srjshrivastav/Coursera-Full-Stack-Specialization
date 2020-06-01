@@ -84,7 +84,13 @@ class Main extends React.Component {
             />
             <Route
               path="/aboutus"
-              component={() => <About leaders={this.props.leaders.leaders} />}
+              component={() => (
+                <About
+                  isLoading={this.props.leaders.isLoading}
+                  errMess={this.props.leaders.errMess}
+                  leaders={this.props.leaders.leaders}
+                />
+              )}
             />
 
             <Route

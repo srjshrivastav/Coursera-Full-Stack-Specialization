@@ -8,25 +8,29 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
+import { Fade, Stagger } from "react-animation-components";
+import { Loading } from "./Loading";
+
+function Show(props) {
+  const { leader } = props;
+  return (
+    <div key={leader.id} className="col-12 mt-5">
+      <Media tag="li">
+        <Media left middle>
+          <Media object src={baseUrl + leader.image} alt={leader.name} />
+        </Media>
+        <Media body className="ml-5">
+          <Media heading>{leader.name}</Media>
+          <Media>{leader.designation}</Media>
+          <p className="mt-3">{leader.description}</p>
+        </Media>
+      </Media>
+    </div>
+  );
+}
 
 function About(props) {
-  const leaders = props.leaders.map((leader) => {
-    return (
-      <div key={leader.id} className="col-12 mt-5">
-        <Media tag="li">
-          <Media left middle>
-            <Media object src={leader.image} alt={leader.name} />
-          </Media>
-          <Media body className="ml-5">
-            <Media heading>{leader.name}</Media>
-            <Media>{leader.designation}</Media>
-            <p className="mt-3">{leader.description}</p>
-          </Media>
-        </Media>
-      </div>
-    );
-  });
-
   return (
     <div className="container">
       <div className="row">
@@ -102,7 +106,17 @@ function About(props) {
         <div className="col-12">
           <h2>Corporate Leadership</h2>
         </div>
-        <div className="col-12">{leaders}</div>
+        {props.isLoading ? (
+          <Loading />
+        ) : (
+          <Stagger in>
+            {props.leaders.map((leader) => (
+              <Fade in>
+                <Show leader={leader} />
+              </Fade>
+            ))}
+          </Stagger>
+        )}
       </div>
     </div>
   );
