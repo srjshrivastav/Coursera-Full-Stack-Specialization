@@ -20,30 +20,31 @@ class Main extends Component {
 
   render() {
     const Stack = createStackNavigator();
-    const menu = () => {
-      return (
-        <Menu
-          dishes={this.state.dishes}
-          onPress={(dishId) => this.onDishSelect(dishId)}
-        />
-      );
-    };
-    const dishDetail = () => {
-      return (
-        <Dishdetail
-          dish={
-            this.state.dishes.filter(
-              (dish) => dish.id === this.state.selectedDish
-            )[0]
-          }
-        />
-      );
-    };
     return (
       <NavigationContainer>
-        <Stack.Navigator style={{ flex: 1 }}>
-          <Stack.Screen name="Menu" component={menu} />
-          <Stack.Screen name="DishDetail" component={dishDetail} />
+        <Stack.Navigator
+          initialRouteName="Menu"
+          headerMode="float"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#512DA8",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              color: "#fff",
+            },
+          }}
+        >
+          <Stack.Screen name="Menu">
+            {(props) => (
+              <Menu
+                {...props}
+                dishes={this.state.dishes}
+                onPress={(dishId) => this.onDishSelect(dishId)}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="DishDetail" component={Dishdetail} />
         </Stack.Navigator>
       </NavigationContainer>
     );

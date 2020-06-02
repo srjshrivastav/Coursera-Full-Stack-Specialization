@@ -19,8 +19,8 @@ function RenderDish(props) {
   }
 }
 
-function Dishdetail(props) {
-  return <RenderDish dish={props.dish} />;
+function Dishdetail({ route }) {
+  return <RenderDish dish={route.params.dish} />;
 }
 
 export default Dishdetail;
