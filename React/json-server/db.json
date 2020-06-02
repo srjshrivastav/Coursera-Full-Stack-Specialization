@@ -201,28 +201,6 @@
       "comment": "It's your birthday, we're gonna party!",
       "author": "25 Cent",
       "date": "2011-12-02T17:57:28.556094Z"
-    },
-    {
-      "rating": "1",
-      "author": "suraj",
-      "comment": "checking",
-      "date": "2020-06-01T11:37:26.551Z",
-      "id": 20
-    },
-    {
-      "rating": "1",
-      "author": "suraj",
-      "comment": "checking",
-      "date": "2020-06-01T11:44:54.720Z",
-      "id": 21
-    },
-    {
-      "dishId": 0,
-      "rating": "3",
-      "author": "syrah",
-      "comment": "dfdf",
-      "date": "2020-06-01T18:09:50.851Z",
-      "id": 22
     }
   ],
   "promotions": [
