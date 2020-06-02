@@ -11,11 +11,7 @@ class Main extends Component {
     super(props);
     this.state = {
       dishes: DISHES,
-      selectedDish: null,
     };
-  }
-  onDishSelect(dishId) {
-    this.setState({ selectedDish: dishId });
   }
 
   render() {
@@ -36,13 +32,7 @@ class Main extends Component {
           }}
         >
           <Stack.Screen name="Menu">
-            {(props) => (
-              <Menu
-                {...props}
-                dishes={this.state.dishes}
-                onPress={(dishId) => this.onDishSelect(dishId)}
-              />
-            )}
+            {(props) => <Menu {...props} dishes={this.state.dishes} />}
           </Stack.Screen>
           <Stack.Screen name="DishDetail" component={Dishdetail} />
         </Stack.Navigator>
