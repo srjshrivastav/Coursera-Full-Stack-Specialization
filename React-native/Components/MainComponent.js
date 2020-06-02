@@ -11,7 +11,18 @@ function stack(props) {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="Menu">
+    <Stack.Navigator
+      initialRouteName="Menu"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
       <Stack.Screen name="Menu">
         {(props) => <Menu {...props} dishes={DISHES} />}
       </Stack.Screen>
@@ -27,7 +38,9 @@ class Main extends Component {
       <NavigationContainer>
         <Drawer.Navigator
           initialRouteName="Home"
-          drawerType="slide"
+          drawerStyle={{
+            backgroundColor: "#D1C4E9",
+          }}
           drawerPosition="left"
         >
           <Drawer.Screen name="Home" component={Home} />
