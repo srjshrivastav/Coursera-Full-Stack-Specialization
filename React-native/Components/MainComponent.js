@@ -2,40 +2,37 @@ import React, { Component } from "react";
 import Menu from "./MenuComponent";
 import { DISHES } from "../shared/dishes";
 import Dishdetail from "./DishdetailComponent";
-import { View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Home from "./HomeComponent";
+
+function stack(props) {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator initialRouteName="Menu">
+      <Stack.Screen name="Menu">
+        {(props) => <Menu {...props} dishes={DISHES} />}
+      </Stack.Screen>
+      <Stack.Screen name="DishDetail" component={Dishdetail} />
+    </Stack.Navigator>
+  );
+}
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dishes: DISHES,
-    };
-  }
-
   render() {
-    const Stack = createStackNavigator();
+    const Drawer = createDrawerNavigator();
     return (
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Menu"
-          headerMode="float"
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#512DA8",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              color: "#fff",
-            },
-          }}
+        <Drawer.Navigator
+          initialRouteName="Home"
+          drawerType="slide"
+          drawerPosition="left"
         >
-          <Stack.Screen name="Menu">
-            {(props) => <Menu {...props} dishes={this.state.dishes} />}
-          </Stack.Screen>
-          <Stack.Screen name="DishDetail" component={Dishdetail} />
-        </Stack.Navigator>
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="Menu" component={stack} />
+        </Drawer.Navigator>
       </NavigationContainer>
     );
   }
