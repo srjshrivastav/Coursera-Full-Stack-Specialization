@@ -10,9 +10,9 @@ import AboutUs from "./AboutComponent";
 import { LEADERS } from "../shared/leaders";
 import Contact from "./ContactComponent";
 
-function stack(props) {
-  const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
+function MenuStack(props) {
   return (
     <Stack.Navigator
       initialRouteName="Menu"
@@ -34,6 +34,65 @@ function stack(props) {
   );
 }
 
+function HomeStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "Home",
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
+  );
+}
+
+function AboutStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "About Us",
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen name="About US">
+        {(props) => <AboutUs {...props} leaders={LEADERS} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+function ConatctStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen name="Conatct Us" component={Contact} />
+    </Stack.Navigator>
+  );
+}
+
 class Main extends Component {
   render() {
     const Drawer = createDrawerNavigator();
@@ -45,21 +104,11 @@ class Main extends Component {
             backgroundColor: "#D1C4E9",
           }}
           drawerPosition="left"
-          hideStatusBar
         >
-          <Drawer.Screen
-            name="Home"
-            component={Home}
-            options={{
-              drawerLabel: "Home",
-            }}
-          />
-          <Drawer.Screen name="About US">
-            {(props) => <AboutUs {...props} leaders={LEADERS} />}
-          </Drawer.Screen>
-          <Drawer.Screen name="Menu" component={stack} />
-
-          <Drawer.Screen name="Contact Us" component={Contact} />
+          <Drawer.Screen name="Home" component={HomeStack} />
+          <Drawer.Screen name="About US" component={AboutStack} />
+          <Drawer.Screen name="Menu" component={MenuStack} />
+          <Drawer.Screen name="Contact Us" component={ConatctStack} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
