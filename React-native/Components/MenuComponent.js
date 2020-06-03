@@ -5,7 +5,7 @@ import { ListItem } from "react-native-elements";
 class Menu extends React.Component {
   render() {
     const handleItemClick = (dish) => {
-      this.props.navigation.navigate("DishDetail", { dish });
+      this.props.navigation.navigate("DishDetail", { dishId: dish.id });
     };
 
     const renderMenuItem = ({ item, index }) => {
