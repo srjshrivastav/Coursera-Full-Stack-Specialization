@@ -11,6 +11,7 @@ import Home from "./HomeComponent";
 import AboutUs from "./AboutComponent";
 import Contact from "./ContactComponent";
 import { Icon } from "react-native-elements";
+import Reservation from "./ReservationComponent";
 import {
   ScrollView,
   SafeAreaView,
@@ -151,6 +152,35 @@ function ConatctStack(props) {
     </Stack.Navigator>
   );
 }
+
+function ReserveStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "Reserve Table",
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+        headerLeft: () => {
+          return (
+            <Icon
+              onPress={() => props.navigation.openDrawer()}
+              title="menu"
+              color="#fff"
+              name="menu"
+            />
+          );
+        },
+      }}
+    >
+      <Stack.Screen name="Conatct Us" component={Reservation} />
+    </Stack.Navigator>
+  );
+}
 const CustomDrawerContentComponent = (props) => (
   <ScrollView>
     <SafeAreaView
@@ -197,6 +227,7 @@ class Main extends Component {
           <Drawer.Screen name="About US" component={AboutStack} />
           <Drawer.Screen name="Menu" component={MenuStack} />
           <Drawer.Screen name="Contact Us" component={ConatctStack} />
+          <Drawer.Screen name="Reserve" component={ReserveStack} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
