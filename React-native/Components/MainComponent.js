@@ -44,7 +44,7 @@ function MenuStack(props) {
           headerLeft: () => {
             return (
               <Icon
-                onPress={() => props.navigation.toggleDrawer()}
+                onPress={() => props.navigation.openDrawer()}
                 title="menu"
                 color="#fff"
                 name="menu"
@@ -75,7 +75,7 @@ function HomeStack(props) {
         headerLeft: () => {
           return (
             <Icon
-              onPress={() => props.navigation.toggleDrawer()}
+              onPress={() => props.navigation.openDrawer()}
               title="menu"
               color="#fff"
               name="menu"
@@ -104,7 +104,7 @@ function AboutStack(props) {
         headerLeft: () => {
           return (
             <Icon
-              onPress={() => props.navigation.toggleDrawer()}
+              onPress={() => props.navigation.openDrawer()}
               title="menu"
               color="#fff"
               name="menu"
@@ -135,7 +135,7 @@ function ConatctStack(props) {
         headerLeft: () => {
           return (
             <Icon
-              onPress={() => props.navigation.toggleDrawer()}
+              onPress={() => props.navigation.openDrawer()}
               title="menu"
               color="#fff"
               name="menu"
