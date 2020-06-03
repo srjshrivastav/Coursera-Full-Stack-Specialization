@@ -3,7 +3,7 @@ import { Text, View, ScrollView, Modal, Button } from "react-native";
 import { Card, Icon, Input, Rating } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
-import { postFavorite } from "../redux/ActionCreators";
+import { postFavorite, postComment } from "../redux/ActionCreators";
 
 function RenderComments(props) {
   const comments = props.comments;
@@ -31,7 +31,6 @@ function RenderComments(props) {
 
 function RenderDish(props) {
   const dish = props.dish;
-  console.log(props);
   if (dish != null) {
     return (
       <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
@@ -71,8 +70,25 @@ function RenderDish(props) {
 }
 
 class Dishdetail extends React.Component {
-  state = {
-    showModal: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+      author: "",
+      comment: "",
+      rating: 5,
+    };
+  }
+  ratingCompleted = (rating) => {
+    this.setState({ rating });
+  };
+
+  handleAuthorInput = (author) => {
+    this.setState({ author });
+  };
+
+  handleCommentInput = (comment) => {
+    this.setState({ comment });
   };
   toggleModal() {
     console.log(this.state);
@@ -82,7 +98,22 @@ class Dishdetail extends React.Component {
   markFavorite(dishId) {
     this.props.postFavorite(dishId);
   }
+  handleComment() {
+    const { rating, author, comment } = this.state;
+    const dishId = this.props.dishId;
+    console.log(this.state);
 
+    this.toggleModal();
+    this.props.postComment(dishId, rating, author, comment);
+  }
+  resetForm() {
+    this.setState({
+      showModal: false,
+      author: "",
+      comment: "",
+      rating: 5,
+    });
+  }
   render() {
     const { dishes, comments, dishId } = this.props;
     return (
@@ -96,12 +127,14 @@ class Dishdetail extends React.Component {
         >
           <Rating
             showRating
-            startingValue={5}
+            startingValue={this.state.rating}
             style={{ paddingVertical: 10 }}
             imageSize={30}
+            onFinishRating={(value) => this.ratingCompleted(value)}
           />
           <Input
             placeholder="Author"
+            onChangeText={(text) => this.handleAuthorInput(text)}
             leftIcon={
               <Icon type="font-awesome" name="user-o" size={20} color="black" />
             }
@@ -116,9 +149,18 @@ class Dishdetail extends React.Component {
               />
             }
             placeholder="Comment"
+            onChangeText={(text) => this.handleCommentInput(text)}
           ></Input>
           <View style={{ margin: 10 }}>
-            <Button title="Submit" raised color="#512DA8" />
+            <Button
+              title="Submit"
+              raised
+              color="#512DA8"
+              onPress={() => {
+                this.handleComment();
+                this.resetForm();
+              }}
+            />
           </View>
           <View style={{ margin: 10 }}>
             <Button
@@ -155,6 +197,8 @@ const mapStateToProps = (state, { route }) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
+  postComment: (dishId, rating, author, comment) =>
+    dispatch(postComment(dishId, rating, author, comment)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dishdetail);
