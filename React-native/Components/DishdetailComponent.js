@@ -13,7 +13,13 @@ function RenderComments(props) {
       {comments.map((comment) => (
         <View key={comment.id} style={{ margin: 10 }}>
           <Text style={{ fontSize: 14 }}>{comment.comment}</Text>
-          <Text style={{ fontSize: 12 }}>{comment.rating} Stars</Text>
+          <Rating
+            readonly
+            startingValue={comment.rating}
+            style={{ alignItems: "flex-start" }}
+            imageSize={15}
+            st
+          />
           <Text style={{ fontSize: 12 }}>
             {"-- " + comment.author + ", " + comment.date}{" "}
           </Text>
@@ -31,7 +37,12 @@ function RenderDish(props) {
       <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
         <Text style={{ margin: 10 }}>{dish.description}</Text>
         <View
-          style={{ flexDirection: "row", marginLeft: 100, marginRight: 100 }}
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            flex: 1,
+            justifyContent: "center",
+          }}
         >
           <Icon
             raised
