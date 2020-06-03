@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Menu from "./MenuComponent";
-import { DISHES } from "../shared/dishes";
 import Dishdetail from "./DishdetailComponent";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,7 +9,6 @@ import {
 } from "@react-navigation/drawer";
 import Home from "./HomeComponent";
 import AboutUs from "./AboutComponent";
-import { LEADERS } from "../shared/leaders";
 import Contact from "./ContactComponent";
 import { Icon } from "react-native-elements";
 import {
@@ -21,6 +19,13 @@ import {
   Image,
   Text,
 } from "react-native";
+import { connect } from "react-redux";
+import {
+  fetchDishes,
+  fetchComments,
+  fetchPromos,
+  fetchLeaders,
+} from "../redux/ActionCreators";
 
 const Stack = createStackNavigator();
 
@@ -53,7 +58,7 @@ function MenuStack(props) {
           },
         }}
       >
-        {(props) => <Menu {...props} dishes={DISHES} />}
+        {(props) => <Menu {...props} />}
       </Stack.Screen>
       <Stack.Screen name="DishDetail" component={Dishdetail} />
     </Stack.Navigator>
@@ -113,9 +118,7 @@ function AboutStack(props) {
         },
       }}
     >
-      <Stack.Screen name="About US">
-        {(props) => <AboutUs {...props} leaders={LEADERS} />}
-      </Stack.Screen>
+      <Stack.Screen name="About US" component={AboutUs} />
     </Stack.Navigator>
   );
 }
@@ -171,6 +174,13 @@ const CustomDrawerContentComponent = (props) => (
 );
 
 class Main extends Component {
+  componentDidMount() {
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
+  }
+
   render() {
     const Drawer = createDrawerNavigator();
     return (
@@ -217,4 +227,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders,
+  };
+};
+const mapDispatchToProps = (dispatch) => ({
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

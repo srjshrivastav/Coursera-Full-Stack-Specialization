@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View, ScrollView, FlatList } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import { Card, Icon } from "react-native-elements";
-import { DISHES } from "../shared/dishes";
-import { COMMENTS } from "../shared/comments";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderComments(props) {
   const comments = props.comments;
@@ -27,10 +27,7 @@ function RenderDish(props) {
 
   if (dish != null) {
     return (
-      <Card
-        featuredTitle={dish.name}
-        image={require("./images/uthappizza.png")}
-      >
+      <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
         <Text style={{ margin: 10 }}>{dish.description}</Text>
         <View style={{ alignItems: "center" }}>
           <Icon
@@ -55,8 +52,6 @@ class Dishdetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dishes: DISHES,
-      comments: COMMENTS,
       favorites: [],
     };
   }
@@ -66,16 +61,16 @@ class Dishdetail extends React.Component {
   }
 
   render() {
-    const dishId = this.props.route.params.dishId;
+    const { dishes, comments, dishId } = this.props;
     return (
       <ScrollView>
         <RenderDish
-          dish={this.state.dishes[dishId]}
+          dish={dishes.dishes[dishId]}
           favorite={this.state.favorites.some((el) => el === dishId)}
           onPress={() => this.markFavorite(dishId)}
         />
         <RenderComments
-          comments={this.state.comments.filter(
+          comments={comments.comments.filter(
             (comment) => comment.dishId === dishId
           )}
         />
@@ -84,4 +79,12 @@ class Dishdetail extends React.Component {
   }
 }
 
-export default Dishdetail;
+const mapStateToProps = (state, { route }) => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    dishId: route.params.dishId,
+  };
+};
+
+export default connect(mapStateToProps)(Dishdetail);

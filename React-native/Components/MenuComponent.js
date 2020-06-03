@@ -1,6 +1,8 @@
 import React from "react";
 import { View, FlatList } from "react-native";
-import { ListItem } from "react-native-elements";
+import { Tile } from "react-native-elements";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
 class Menu extends React.Component {
   render() {
@@ -10,20 +12,20 @@ class Menu extends React.Component {
 
     const renderMenuItem = ({ item, index }) => {
       return (
-        <ListItem
+        <Tile
           key={index}
           title={item.name}
-          subtitle={item.description}
-          hideChevron={true}
+          caption={item.description}
+          featured
           onPress={() => handleItemClick(item)}
-          leftAvatar={{ source: require("./images/uthappizza.png") }}
+          imageSrc={{ uri: baseUrl + item.image }}
         />
       );
     };
 
     return (
       <FlatList
-        data={this.props.dishes}
+        data={this.props.dishes.dishes}
         renderItem={renderMenuItem}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -31,4 +33,9 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+const mapStateToProps = (state) => {
+  return {
+    dishes: state.dishes,
+  };
+};
+export default connect(mapStateToProps)(Menu);

@@ -1,8 +1,10 @@
 import React from "react";
 import { ScrollView, Text } from "react-native";
 import { Card, ListItem } from "react-native-elements";
+import { connect } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
 
-export default function AboutUs(props) {
+function AboutUs(props) {
   return (
     <ScrollView>
       <Card title="Our History">
@@ -19,15 +21,23 @@ export default function AboutUs(props) {
         </Text>
       </Card>
       <Card title="Corporate Leadership">
-        {props.leaders.map((leader) => (
+        {props.leaders.leaders.map((leader) => (
           <ListItem
             key={leader.id}
             title={leader.name}
             subtitle={leader.description}
-            leftAvatar={{ source: require("./images/alberto.png") }}
+            leftAvatar={{ source: { uri: baseUrl + leader.image } }}
           />
         ))}
       </Card>
     </ScrollView>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    leaders: state.leaders,
+  };
+};
+
+export default connect(mapStateToProps)(AboutUs);
