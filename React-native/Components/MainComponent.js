@@ -6,6 +6,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "./HomeComponent";
+import AboutUs from "./AboutComponent";
+import { LEADERS } from "../shared/leaders";
+import Contact from "./ContactComponent";
 
 function stack(props) {
   const Stack = createStackNavigator();
@@ -42,9 +45,21 @@ class Main extends Component {
             backgroundColor: "#D1C4E9",
           }}
           drawerPosition="left"
+          hideStatusBar
         >
-          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen
+            name="Home"
+            component={Home}
+            options={{
+              drawerLabel: "Home",
+            }}
+          />
+          <Drawer.Screen name="About US">
+            {(props) => <AboutUs {...props} leaders={LEADERS} />}
+          </Drawer.Screen>
           <Drawer.Screen name="Menu" component={stack} />
+
+          <Drawer.Screen name="Contact Us" component={Contact} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
