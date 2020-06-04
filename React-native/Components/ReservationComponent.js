@@ -8,13 +8,14 @@ import {
   Button,
   Modal,
   ScrollView,
+  Animated,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
 
 class Reservation extends Component {
   constructor(props) {
     super(props);
-
+    this.bounceValue = new Animated.Value(0);
     this.state = {
       guests: 1,
       smoking: false,
@@ -30,6 +31,12 @@ class Reservation extends Component {
     console.log(JSON.stringify(this.state));
     this.toggleModal();
   }
+  componentDidMount() {
+    Animated.timing(this.bounceValue, {
+      toValue: 1,
+      duration: 1000,
+    }).start();
+  }
 
   resetForm() {
     this.setState({
@@ -42,7 +49,7 @@ class Reservation extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <Animated.ScrollView style={{ transform: [{ scale: this.bounceValue }] }}>
         <Modal
           animationType={"slide"}
           transparent={false}
@@ -134,7 +141,7 @@ class Reservation extends Component {
             accessibilityLabel="Learn more about this purple button"
           />
         </View>
-      </ScrollView>
+      </Animated.ScrollView>
     );
   }
 }
