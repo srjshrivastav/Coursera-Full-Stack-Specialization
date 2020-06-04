@@ -3,9 +3,7 @@ import {
   Text,
   View,
   ScrollView,
-  FlatList,
   Modal,
-  StyleSheet,
   Button,
   Alert,
   PanResponder,
@@ -30,7 +28,6 @@ function RenderComments(props) {
               startingValue={comment.rating}
               style={{ alignItems: "flex-start" }}
               imageSize={15}
-              st
             />
             <Text style={{ fontSize: 12 }}>
               {"-- " + comment.author + ", " + comment.date}{" "}
@@ -54,11 +51,7 @@ function RenderDish(props) {
       return true;
     },
     onPanResponderGrant: () => {
-      this.view
-        .rubberBand(1000)
-        .then((endState) =>
-          console.log(endState.finished ? "finished" : "cancelled")
-        );
+      this.view.rubberBand(1000).then((endState) => props.comment());
     },
 
     onPanResponderEnd: (e, gestureState) => {
