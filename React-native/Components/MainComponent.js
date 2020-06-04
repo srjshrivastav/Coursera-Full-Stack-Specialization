@@ -5,7 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createDrawerNavigator,
-  DrawerItemList,
+  DrawerItem,
+  DrawerView,
+  DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import Home from "./HomeComponent";
 import AboutUs from "./AboutComponent";
@@ -182,25 +184,53 @@ function ReserveStack(props) {
   );
 }
 const CustomDrawerContentComponent = (props) => (
-  <ScrollView>
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: "always", horizontal: "never" }}
-    >
-      <View style={styles.drawerHeader}>
-        <View style={{ flex: 1 }}>
-          <Image
-            source={require("./images/logo.png")}
-            style={styles.drawerImage}
-          />
+  <View>
+    <DrawerContentScrollView>
+      <SafeAreaView
+        style={styles.container}
+        forceInset={{ top: "always", horizontal: "never" }}
+      >
+        <View style={styles.drawerHeader}>
+          <View style={{ flex: 1 }}>
+            <Image
+              source={require("./images/logo.png")}
+              style={styles.drawerImage}
+            />
+          </View>
+          <View style={{ flex: 2 }}>
+            <Text style={styles.drawerHeaderText}>Ristorante Con Fusion</Text>
+          </View>
         </View>
-        <View style={{ flex: 2 }}>
-          <Text style={styles.drawerHeaderText}>Ristorante Con Fusion</Text>
-        </View>
-      </View>
-    </SafeAreaView>
-    <DrawerItemList {...props} />
-  </ScrollView>
+      </SafeAreaView>
+      <DrawerItem
+        label="Home"
+        icon={() => <Icon name="home" type="font-awesome" />}
+        onPress={() => props.navigation.navigate("Home")}
+      />
+      <DrawerItem
+        label="About Us"
+        icon={() => <Icon name="info-circle" type="font-awesome" />}
+        onPress={() => props.navigation.navigate("About US")}
+      />
+      <DrawerItem
+        label="Menu"
+        icon={({ tintColor }) => (
+          <Icon name="list" type="font-awesome" color={tintColor} />
+        )}
+        onPress={() => props.navigation.navigate("Menu")}
+      />
+      <DrawerItem
+        label="Conatct Us"
+        icon={() => <Icon name="address-card" type="font-awesome" />}
+        onPress={() => props.navigation.navigate("Contact Us")}
+      />
+      <DrawerItem
+        label="Reserve"
+        icon={() => <Icon name="cutlery" type="font-awesome" />}
+        onPress={() => props.navigation.navigate("Reserve")}
+      />
+    </DrawerContentScrollView>
+  </View>
 );
 
 class Main extends Component {

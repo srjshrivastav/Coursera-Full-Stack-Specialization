@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import { Card } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
@@ -7,7 +7,6 @@ import { Loading } from "./LoadingComponent";
 
 function RenderItem(props) {
   const item = props.item;
-
   if (props.isLoading) {
     return <Loading />;
   } else if (props.errMess) {
@@ -20,9 +19,9 @@ function RenderItem(props) {
     if (item != null) {
       return (
         <Card
+          image={{ uri: baseUrl + item.image }}
           featuredTitle={item.name}
           featuredSubtitle={item.designation}
-          image={{ uri: baseUrl + item.image }}
         >
           <Text style={{ margin: 10 }}>{item.description}</Text>
         </Card>
