@@ -6,7 +6,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import {
   createDrawerNavigator,
   DrawerItem,
-  DrawerContent,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
 import Home from "./HomeComponent";
@@ -14,14 +13,7 @@ import AboutUs from "./AboutComponent";
 import Contact from "./ContactComponent";
 import { Icon } from "react-native-elements";
 import Reservation from "./ReservationComponent";
-import {
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
-  Text,
-} from "react-native";
+import { SafeAreaView, StyleSheet, View, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import {
   fetchDishes,
@@ -29,6 +21,7 @@ import {
   fetchPromos,
   fetchLeaders,
 } from "../redux/ActionCreators";
+import Favorites from "./FavouriteComponent";
 
 const Stack = createStackNavigator();
 
@@ -183,6 +176,35 @@ function ReserveStack(props) {
     </Stack.Navigator>
   );
 }
+function FavoriteStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitle: "Favourite",
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+        headerLeft: () => {
+          return (
+            <Icon
+              onPress={() => props.navigation.openDrawer()}
+              title="menu"
+              color="#fff"
+              name="menu"
+            />
+          );
+        },
+      }}
+    >
+      <Stack.Screen name="Favourite" component={Favorites} />
+    </Stack.Navigator>
+  );
+}
+
 const CustomDrawerContentComponent = (props) => (
   <DrawerContentScrollView>
     <SafeAreaView
@@ -228,6 +250,11 @@ const CustomDrawerContentComponent = (props) => (
       icon={() => <Icon name="cutlery" type="font-awesome" />}
       onPress={() => props.navigation.navigate("Reserve")}
     />
+    <DrawerItem
+      label={() => <Text>Favourite</Text>}
+      icon={() => <Icon name="heart" type="font-awesome" />}
+      onPress={() => props.navigation.navigate("favourite")}
+    />
   </DrawerContentScrollView>
 );
 
@@ -256,6 +283,7 @@ class Main extends Component {
           <Drawer.Screen name="Menu" component={MenuStack} />
           <Drawer.Screen name="Contact Us" component={ConatctStack} />
           <Drawer.Screen name="Reserve" component={ReserveStack} />
+          <Drawer.Screen name="favourite" component={FavoriteStack} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
