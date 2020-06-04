@@ -43,7 +43,9 @@ function RenderDish(props) {
   const dish = props.dish;
   handleViewRef = (ref) => (this.view = ref);
   const recognizeDrag = ({ moveX, moveY, dx, dy }) => {
-    if (dx < -200) return true;
+    console.log(dx);
+    if (dx < -200) return "favourite";
+    if (dx > 200) return "comment";
     else return false;
   };
   const panResponder = PanResponder.create({
@@ -51,11 +53,12 @@ function RenderDish(props) {
       return true;
     },
     onPanResponderGrant: () => {
-      this.view.rubberBand(1000).then((endState) => props.comment());
+      this.view.rubberBand(1000);
     },
 
     onPanResponderEnd: (e, gestureState) => {
-      if (recognizeDrag(gestureState))
+      const reuslt = recognizeDrag(gestureState);
+      if (reuslt === "favourite")
         Alert.alert(
           "Add Favorite",
           "Are you sure you wish to add " + dish.name + " to favorite?",
@@ -76,7 +79,7 @@ function RenderDish(props) {
           ],
           { cancelable: false }
         );
-
+      if (reuslt === "comment") props.comment();
       return true;
     },
   });
