@@ -7,8 +7,8 @@ import {
   Switch,
   Button,
   Modal,
-  ScrollView,
   Animated,
+  Alert,
 } from "react-native";
 import DatePicker from "react-native-datepicker";
 
@@ -28,7 +28,32 @@ class Reservation extends Component {
   }
 
   handleReservation() {
-    console.log(JSON.stringify(this.state));
+    const { guests, smoking, date } = this.state;
+    const final =
+      "Number of guests :" +
+      guests.toString() +
+      "\nSmoking?" +
+      smoking +
+      "\nDate and Time :" +
+      date;
+    Alert.alert(
+      "Your Reservation OK?",
+      final,
+      [
+        {
+          text: "CANCEL",
+          onPress: () => this.resetForm(),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => this.resetForm(),
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
     this.toggleModal();
   }
   componentDidMount() {
@@ -50,35 +75,6 @@ class Reservation extends Component {
   render() {
     return (
       <Animated.ScrollView style={{ transform: [{ scale: this.bounceValue }] }}>
-        <Modal
-          animationType={"slide"}
-          transparent={false}
-          visible={this.state.showModal}
-          onDismiss={() => this.toggleModal()}
-          onRequestClose={() => this.toggleModal()}
-        >
-          <View style={styles.modal}>
-            <Text style={styles.modalTitle}>Your Reservation</Text>
-            <Text style={styles.modalText}>
-              Number of Guests: {this.state.guests}
-            </Text>
-            <Text style={styles.modalText}>
-              Smoking?: {this.state.smoking ? "Yes" : "No"}
-            </Text>
-            <Text style={styles.modalText}>
-              Date and Time: {this.state.date}
-            </Text>
-
-            <Button
-              onPress={() => {
-                this.toggleModal();
-                this.resetForm();
-              }}
-              color="#512DA8"
-              title="Close"
-            />
-          </View>
-        </Modal>
         <View style={styles.formRow}>
           <Text style={styles.formLabel}>Number of Guests</Text>
           <Picker
@@ -139,6 +135,7 @@ class Reservation extends Component {
             title="Reserve"
             color="#512DA8"
             accessibilityLabel="Learn more about this purple button"
+            disabled={this.state.date ? false : true}
           />
         </View>
       </Animated.ScrollView>
