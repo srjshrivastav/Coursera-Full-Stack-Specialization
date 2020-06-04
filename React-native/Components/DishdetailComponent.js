@@ -3,29 +3,32 @@ import { Text, View, ScrollView, Modal, Button } from "react-native";
 import { Card, Icon, Input, Rating } from "react-native-elements";
 import { connect } from "react-redux";
 import { baseUrl } from "../shared/baseUrl";
+import * as Animatable from "react-native-animatable";
 import { postFavorite, postComment } from "../redux/ActionCreators";
 
 function RenderComments(props) {
   const comments = props.comments;
 
   return (
-    <Card title="Comments">
-      {comments.map((comment) => (
-        <View key={comment.id} style={{ margin: 10 }}>
-          <Text style={{ fontSize: 14 }}>{comment.comment}</Text>
-          <Rating
-            readonly
-            startingValue={comment.rating}
-            style={{ alignItems: "flex-start" }}
-            imageSize={15}
-            st
-          />
-          <Text style={{ fontSize: 12 }}>
-            {"-- " + comment.author + ", " + comment.date}{" "}
-          </Text>
-        </View>
-      ))}
-    </Card>
+    <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
+      <Card title="Comments">
+        {comments.map((comment) => (
+          <View key={comment.id} style={{ margin: 10 }}>
+            <Text style={{ fontSize: 14 }}>{comment.comment}</Text>
+            <Rating
+              readonly
+              startingValue={comment.rating}
+              style={{ alignItems: "flex-start" }}
+              imageSize={15}
+              st
+            />
+            <Text style={{ fontSize: 12 }}>
+              {"-- " + comment.author + ", " + comment.date}{" "}
+            </Text>
+          </View>
+        ))}
+      </Card>
+    </Animatable.View>
   );
 }
 
@@ -33,36 +36,40 @@ function RenderDish(props) {
   const dish = props.dish;
   if (dish != null) {
     return (
-      <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
-        <Text style={{ margin: 10 }}>{dish.description}</Text>
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            flex: 1,
-            justifyContent: "center",
-          }}
-        >
-          <Icon
-            raised
-            reverse
-            name={props.favorite ? "heart" : "heart-o"}
-            type="font-awesome"
-            color="#f50"
-            onPress={() =>
-              props.favorite ? console.log("Already favorite") : props.onPress()
-            }
-          />
-          <Icon
-            raised
-            reverse
-            name="pencil"
-            type="font-awesome"
-            color="#512DA8"
-            onPress={() => props.comment()}
-          />
-        </View>
-      </Card>
+      <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+        <Card featuredTitle={dish.name} image={{ uri: baseUrl + dish.image }}>
+          <Text style={{ margin: 10 }}>{dish.description}</Text>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Icon
+              raised
+              reverse
+              name={props.favorite ? "heart" : "heart-o"}
+              type="font-awesome"
+              color="#f50"
+              onPress={() =>
+                props.favorite
+                  ? console.log("Already favorite")
+                  : props.onPress()
+              }
+            />
+            <Icon
+              raised
+              reverse
+              name="pencil"
+              type="font-awesome"
+              color="#512DA8"
+              onPress={() => props.comment()}
+            />
+          </View>
+        </Card>
+      </Animatable.View>
     );
   } else {
     return <View></View>;
