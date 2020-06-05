@@ -13,6 +13,7 @@ import AboutUs from "./AboutComponent";
 import Contact from "./ContactComponent";
 import { Icon } from "react-native-elements";
 import Reservation from "./ReservationComponent";
+import Login from "./LoginComponent";
 import { SafeAreaView, StyleSheet, View, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -24,6 +25,28 @@ import {
 import Favorites from "./FavouriteComponent";
 
 const Stack = createStackNavigator();
+
+function LoginStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        title: "Login",
+        headerLeft: () => (
+          <Icon name="menu" onPress={() => props.navigation.openDrawer()} />
+        ),
+        headerStyle: {
+          backgroundColor: "#512DA8",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          color: "#fff",
+        },
+      }}
+    >
+      <Stack.Screen name="Login" component={Login} />
+    </Stack.Navigator>
+  );
+}
 
 function MenuStack(props) {
   return (
@@ -255,6 +278,11 @@ const CustomDrawerContentComponent = (props) => (
       icon={() => <Icon name="heart" type="font-awesome" />}
       onPress={() => props.navigation.navigate("favourite")}
     />
+    <DrawerItem
+      label={() => <Text>Login</Text>}
+      icon={() => <Icon name="heart" type="font-awesome" />}
+      onPress={() => props.navigation.navigate("Login")}
+    />
   </DrawerContentScrollView>
 );
 
@@ -284,6 +312,7 @@ class Main extends Component {
           <Drawer.Screen name="Contact Us" component={ConatctStack} />
           <Drawer.Screen name="Reserve" component={ReserveStack} />
           <Drawer.Screen name="favourite" component={FavoriteStack} />
+          <Drawer.Screen name="Login" component={LoginStack} />
         </Drawer.Navigator>
       </NavigationContainer>
     );
