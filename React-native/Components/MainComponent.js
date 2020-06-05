@@ -280,7 +280,7 @@ const CustomDrawerContentComponent = (props) => (
     />
     <DrawerItem
       label={() => <Text>Login</Text>}
-      icon={() => <Icon name="heart" type="font-awesome" />}
+      icon={() => <Icon name="sign-in" type="font-awesome" />}
       onPress={() => props.navigation.navigate("Login")}
     />
   </DrawerContentScrollView>
