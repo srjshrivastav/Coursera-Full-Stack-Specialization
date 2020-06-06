@@ -13,6 +13,7 @@ import {
 import DatePicker from "react-native-datepicker";
 import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
+import * as Calendar from "expo-calendar";
 
 class Reservation extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class Reservation extends Component {
         },
         {
           text: "OK",
-          onPress: () => this.resetForm(),
+          onPress: () => this.setToCal(),
         },
       ],
       {
@@ -58,6 +59,23 @@ class Reservation extends Component {
     );
     this.toggleModal();
   }
+
+  setToCal = async () => {
+    let date = new Date(this.state.date).toLocaleDateString();
+    const perm = await Calendar.getCalendarPermissionsAsync();
+    const cal = await Calendar.createCalendarAsync({
+      entityType: Calendar.EntityTypes.EVENT,
+    });
+    console.log(cal);
+    if (perm.status === "granted") {
+      Calendar.createEventAsync(Calendar.DEFAULT, {
+        startDate: this.state.date,
+        endDate: this.state.date,
+        title: "Con Fusion Table Reservation",
+      });
+    }
+  };
+
   componentDidMount() {
     Animated.timing(this.bounceValue, {
       toValue: 1,

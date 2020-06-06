@@ -91,7 +91,7 @@ class LoginTab extends Component {
           <Button
             onPress={() => this.props.navigation.navigate("Register")}
             title="Register"
-            clear
+            type="clear"
             icon={
               <Icon
                 name="user-plus"
