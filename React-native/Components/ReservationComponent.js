@@ -6,7 +6,6 @@ import {
   Picker,
   Switch,
   Button,
-  Modal,
   Animated,
   Alert,
 } from "react-native";
@@ -50,7 +49,7 @@ class Reservation extends Component {
         },
         {
           text: "OK",
-          onPress: () => this.setToCal(),
+          onPress: () => this.checkCalperm(),
         },
       ],
       {
@@ -60,21 +59,58 @@ class Reservation extends Component {
     this.toggleModal();
   }
 
-  setToCal = async () => {
-    let date = new Date(this.state.date).toLocaleDateString();
-    const perm = await Calendar.getCalendarPermissionsAsync();
-    const cal = await Calendar.createCalendarAsync({
-      entityType: Calendar.EntityTypes.EVENT,
-    });
-    console.log(cal);
-    if (perm.status === "granted") {
-      Calendar.createEventAsync(Calendar.DEFAULT, {
-        startDate: this.state.date,
-        endDate: this.state.date,
-        title: "Con Fusion Table Reservation",
-      });
+  checkCalperm = async () => {
+    let permission = await Calendar.getCalendarPermissionsAsync();
+    if (permission.status === "granted") {
+      this.setEvent();
+    } else {
+      permission = await Permissions.askAsync(Permissions.CALENDAR);
+      if (permission.status === "granted") {
+        this.setEvent();
+      }
     }
   };
+
+  async setEvent() {
+    const millisec = Date.parse(this.state.date);
+    const startDate = new Date(millisec);
+    const endDate = new Date(millisec + 2 * 60 * 60 * 1000);
+    const calendars = await (await Calendar.getCalendarsAsync()).filter(
+      ({ allowsModifications }) => allowsModifications
+    );
+    if (calendars.length === 0) {
+      id = await this.createCalendar();
+    } else {
+      id = calendars[0].id;
+    }
+    Calendar.createEventAsync(id, {
+      startDate,
+      endDate,
+      title: "Con Fusion Table Reservation",
+      timeZone: "GMT+5:30",
+    });
+  }
+
+  async createCalendar() {
+    const newCalendarSource = {
+      isLocalAccount: true,
+      name: "Ristorant Confusion",
+    };
+
+    const newCalendarID = await Calendar.createCalendarAsync({
+      title: "Events",
+      color: "blue",
+      entityType: Calendar.EntityTypes.EVENT,
+      sourceId: newCalendarSource.id,
+      source: newCalendarSource,
+      name: "Confusion",
+      ownerAccount: "personal",
+      accessLevel: Calendar.CalendarAccessLevel.OWNER,
+      isPrimary: true,
+    });
+
+    return newCalendarID;
+  }
 
   componentDidMount() {
     Animated.timing(this.bounceValue, {
