@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+require("mongoose-currency").loadType(mongoose);
+
+const currency = mongoose.Types.Currency;
 
 var commentSchema = new Schema(
   {
@@ -47,7 +50,7 @@ const dishScheme = new Schema(
       default: "",
     },
     price: {
-      type: Number,
+      type: currency,
       required: true,
       min: 0,
     },
