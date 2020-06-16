@@ -4,7 +4,6 @@ const promo = require("../models/promotion");
 const promoRouter = express.Router();
 
 promoRouter.use(bodyParser.json());
-console.log("In promo Router");
 promoRouter
   .route("/")
   .get((req, res, next) => {
