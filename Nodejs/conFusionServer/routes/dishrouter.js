@@ -7,7 +7,6 @@ const Dishes = require("../models/dishes");
 const dishRouter = express.Router();
 
 dishRouter.use(bodyParser.json());
-console.log("In dish Router");
 dishRouter
   .route("/")
   .get((req, res, next) => {
@@ -23,7 +22,6 @@ dishRouter
       .catch((err) => next(err));
   })
   .post((req, res, next) => {
-    console.log(req.body);
     Dishes.create(req.body)
       .then(
         (dish) => {
