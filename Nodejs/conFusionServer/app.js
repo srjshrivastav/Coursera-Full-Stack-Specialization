@@ -3,6 +3,8 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var session = require("express-session");
+var fileStore = require("session-file-store")(session);
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -10,6 +12,7 @@ var dishRouter = require("./routes/dishrouter");
 var leadersRouter = require("./routes/leaderRouter");
 var promoRouter = require("./routes/promotionRouter");
 const mongoose = require("mongoose");
+const { use } = require("./routes/promotionRouter");
 
 const url = "mongodb://localhost:27017/conFusion";
 const connect = mongoose.connect(url);
@@ -28,8 +31,16 @@ var app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-app.use(cookieParser("123-456-7890-1234"));
-app.use(auth);
+app.use(cookieParser("12345-67890-09876-54321"));
+app.use(
+  session({
+    name: "session-id",
+    secret: "12345-67890-09876-54321",
+    saveUninitialized: false,
+    resave: false,
+    store: new fileStore(),
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -37,7 +48,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 function auth(req, res, next) {
-  if (!req.signedCookies.user) {
+  console.log(req.session);
+  if (!req.session.user) {
+    console.log("In If");
     var authHeader = req.headers.authorization;
     console.log(authHeader);
     if (!authHeader) {
@@ -52,10 +65,10 @@ function auth(req, res, next) {
       .split(":");
     var user = auth[0];
     var pass = auth[1];
-    console.log(user, pass);
+    console.log(user, user === "admin", typeof pass);
     if (user == "admin" && pass == "password") {
-      console.log("iidhar");
-      res.cookie("user", "admin", { signed: true });
+      console.log("authed");
+      req.session.user = "admin";
       next(); // authorized
     } else {
       var err = new Error("You are not authenticated!");
@@ -64,7 +77,9 @@ function auth(req, res, next) {
       next(err);
     }
   } else {
-    if (req.signedCookies.user === "admin") {
+    console.log("In else");
+    if (req.session.user === "admin") {
+      console.log("req session", req.session);
       next();
     } else {
       var err = new Error("You are not authenticated!");
@@ -73,7 +88,7 @@ function auth(req, res, next) {
     }
   }
 }
-
+app.use(auth);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/dishes", dishRouter);
