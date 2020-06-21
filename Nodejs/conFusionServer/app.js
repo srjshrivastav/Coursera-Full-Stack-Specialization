@@ -28,37 +28,51 @@ var app = express();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
-function auth(req, res, next) {
-  var authHeader = req.headers.authorization;
-  if (!authHeader) {
-    var err = new Error("You are not authenticated!");
-    res.setHeader("WWW-Authenticate", "Basic");
-    err.status = 401;
-    next(err);
-    return;
-  }
-  var auth = new Buffer.from(authHeader.split(" ")[1], "base64")
-    .toString()
-    .split(":");
-  var user = auth[0];
-  var pass = auth[1];
-  if (user == "admin" && pass == "password") {
-    next(); // authorized
-  } else {
-    var err = new Error("You are not authenticated!");
-    res.setHeader("WWW-Authenticate", "Basic");
-    err.status = 401;
-    next(err);
-  }
-}
-
+app.use(cookieParser("123-456-7890-1234"));
 app.use(auth);
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+function auth(req, res, next) {
+  if (!req.signedCookies.user) {
+    var authHeader = req.headers.authorization;
+    console.log(authHeader);
+    if (!authHeader) {
+      var err = new Error("You are not authenticated!");
+      res.setHeader("WWW-Authenticate", "Basic");
+      err.status = 401;
+      next(err);
+      return;
+    }
+    var auth = new Buffer.from(authHeader.split(" ")[1], "base64")
+      .toString()
+      .split(":");
+    var user = auth[0];
+    var pass = auth[1];
+    console.log(user, pass);
+    if (user == "admin" && pass == "password") {
+      console.log("iidhar");
+      res.cookie("user", "admin", { signed: true });
+      next(); // authorized
+    } else {
+      var err = new Error("You are not authenticated!");
+      res.setHeader("WWW-Authenticate", "Basic");
+      err.status = 401;
+      next(err);
+    }
+  } else {
+    if (req.signedCookies.user === "admin") {
+      next();
+    } else {
+      var err = new Error("You are not authenticated!");
+      err.status = 401;
+      next(err);
+    }
+  }
+}
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
