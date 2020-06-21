@@ -48,11 +48,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 function auth(req, res, next) {
-  console.log(req.session);
   if (!req.session.user) {
-    console.log("In If");
     var authHeader = req.headers.authorization;
-    console.log(authHeader);
     if (!authHeader) {
       var err = new Error("You are not authenticated!");
       res.setHeader("WWW-Authenticate", "Basic");
@@ -65,9 +62,7 @@ function auth(req, res, next) {
       .split(":");
     var user = auth[0];
     var pass = auth[1];
-    console.log(user, user === "admin", typeof pass);
     if (user == "admin" && pass == "password") {
-      console.log("authed");
       req.session.user = "admin";
       next(); // authorized
     } else {
@@ -77,7 +72,6 @@ function auth(req, res, next) {
       next(err);
     }
   } else {
-    console.log("In else");
     if (req.session.user === "admin") {
       console.log("req session", req.session);
       next();
