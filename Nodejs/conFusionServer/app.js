@@ -1,10 +1,12 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
+// var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var session = require("express-session");
 var fileStore = require("session-file-store")(session);
+var passport = require("passport");
+var authenticate = require("./autenticate");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -48,25 +50,19 @@ app.use(
 );
 
 function auth(req, res, next) {
-  // console.log("Session here", req.session);
-  if (!req.session.user) {
+  console.log("Request Here in app.js", req);
+  if (!req.user) {
     var err = new Error("You are not authorized");
 
     res.setHeader("WWW-Authenticate", "Basic");
     err.status = 401;
     return next(err);
   } else {
-    if (req.session.user === "authenticated") {
-      next();
-    } else {
-      var err = new Error("You are not authorized");
-
-      res.setHeader("WWW-Authenticate", "Basic");
-      err.status = 401;
-      return next(err);
-    }
+    next();
   }
 }
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
