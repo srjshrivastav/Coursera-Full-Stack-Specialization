@@ -50,7 +50,7 @@ app.use(
 );
 
 function auth(req, res, next) {
-  console.log("Request Here in app.js", req);
+  console.log("Request Here in app.js", req.user);
   if (!req.user) {
     var err = new Error("You are not authorized");
 

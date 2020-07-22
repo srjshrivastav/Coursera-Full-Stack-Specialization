@@ -12,7 +12,8 @@ router.get("/", function (req, res, next) {
 
 router.post("/signup", (req, res, next) => {
   User.register(
-    new User({ username: req.body.username }, req.body.password),
+    new User({ username: req.body.username }),
+    req.body.password,
     (err, user) => {
       if (err) {
         res.statusCode = 500;
