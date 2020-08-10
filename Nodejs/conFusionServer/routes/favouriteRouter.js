@@ -53,6 +53,22 @@ favRouter
         }
       })
       .catch((err) => next(err));
+  })
+  .delete(cors.cors, authenticate.verifyUser, (req, res, next) => {
+    Favourite.findOne({ user: req.user._id }).then(
+      (doc) => {
+        if (doc) {
+          doc.remove().then(() => {
+            res.sendStatus(200).setHeader("Content-Type", "text/plain");
+            res.end("SuccessFully Deleted all the Favs");
+          });
+        } else {
+          res.sendStatus(200).setHeader("Content-Type", "text/plain");
+          res.end("you dont have any favs yet!");
+        }
+      },
+      (err) => next(err)
+    );
   });
 
 module.exports = favRouter;
