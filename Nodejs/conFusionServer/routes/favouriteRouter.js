@@ -71,4 +71,45 @@ favRouter
     );
   });
 
+favRouter
+  .route("/:dishId")
+  .options(cors.corsWithOptions, (req, res) => {
+    res.sendStatus(200);
+  })
+  .post(cors.cors, authenticate.verifyUser, (req, res, next) => {
+    Favourite.findOne({ user: req.user._id }).then(
+      (doc) => {
+        if (doc) {
+          if (doc.dishes.indexOf(req.params.dishId) === -1) {
+            doc.dishes.push(req.params.dishId);
+            doc
+              .save()
+              .then(() => {
+                res.sendStatus(200);
+                res.setHeader("Content-Type", "text/plain");
+                res.end("Success full add");
+              })
+              .catch((err) => next(err));
+          } else {
+            res.sendStatus(200);
+            res.setHeader("Content-Type", "text/plain");
+            res.end("Already Fav");
+          }
+        } else {
+          Favourite.create({
+            user: req.user._id,
+            dishes: [req.params.dishId],
+          })
+            .then((newDoc) => {
+              res.sendStatus(200);
+              res.setHeader("Content-Type", "application/json");
+              res.json(newDoc);
+            })
+            .catch((err) => next(err));
+        }
+      },
+      (err) => next(err)
+    );
+  });
+
 module.exports = favRouter;
