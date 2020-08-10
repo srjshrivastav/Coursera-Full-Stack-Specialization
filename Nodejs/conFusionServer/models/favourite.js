@@ -10,7 +10,7 @@ const favouriteSchema = new Schema(
     dishes: [
       {
         type: Schema.Types.ObjectId,
-        ref: "dishes",
+        ref: "Dish",
       },
     ],
   },
