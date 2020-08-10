@@ -110,6 +110,35 @@ favRouter
       },
       (err) => next(err)
     );
+  })
+  .delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    Favourite.findOne({ user: req.user._id }).then(
+      (doc) => {
+        if (doc) {
+          if (doc.dishes.indexOf(req.params.dishId) !== -1) {
+            doc.dishes = doc.dishes.filter(
+              (id) => !id.equals(req.params.dishId)
+            );
+            doc
+              .save()
+              .then(() => {
+                res.sendStatus(200);
+                res.setHeader("content-type", "text/plain");
+                res.end("remove successfull");
+              })
+              .catch((err) => next(err));
+          } else {
+            res.sendStatus(200).setHeader("content-type", "text/plain");
+            res.end("This is not your fav dish yet");
+          }
+        } else {
+          res.sendStatus(200);
+          res.setHeader("content-type", "text/plain");
+          res.end("You dont have any favs yet!");
+        }
+      },
+      (err) => next(err)
+    );
   });
 
 module.exports = favRouter;
